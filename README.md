@@ -10,6 +10,10 @@ Frontend apps with Nextjs (?)
 -------
 
 * Users auth-frontend 
+    * need variables shown in .env
 * Users backend 
+    * need firebase-credentials.json and variables shown in .env
 * Tasks frontend
-* Tasks backend 
+    * need variables shown in .env
+* Tasks backend
+    * need variables shown in .env
