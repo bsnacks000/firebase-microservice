@@ -45,8 +45,8 @@ async def create_admin_user(user: UserInCreate = Body(..., embed=True),
                         db: AsyncIOMotorDatabase = Depends(get_database)):
     
     # XXX make this depends
-    cred = credentials.Certificate(FIREBASE_CRED_FILE)
-    firebase_app = firebase_admin.initialize_app(cred)
+    # cred = credentials.Certificate(FIREBASE_CRED_FILE)
+    # firebase_app = firebase_admin.initialize_app(cred)
 
     # XXX try and raise error for this boi
     fireuser = auth.create_user(email= user.email, email_verified=False, password=user.password,

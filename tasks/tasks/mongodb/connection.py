@@ -3,7 +3,7 @@ from typing import List
 from motor.motor_asyncio import AsyncIOMotorClient
 from ..config import MONGO_URL, MONGO_DB
 from .db import db
-from .collections import CollectionWrapper, UserMeta
+from .collections import CollectionWrapper, TaskMeta
 
 async def connect_to_mongo():
     logging.info("Connecting to mongodb...")
@@ -12,7 +12,7 @@ async def connect_to_mongo():
 
 async def create_index_for_collections():
     mongo_wrapper = CollectionWrapper(db.client[MONGO_DB])
-    for collection in UserMeta:
+    for collection in TaskMeta:
         logging.info(f"creating index for {collection.value[0]}")
         await mongo_wrapper.create_unique_index(*collection.value)
 

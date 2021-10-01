@@ -53,11 +53,10 @@ class RWModel(BaseModel):
 
 class TaskInCreate(RWModel):
     body: str
-    user_id: Union[PyObjectId, str]
 
 class Task(IDModelMixin, DateTimeModelMixin):
     body: str
-    user_id: PyObjectId
+    username: str
     
 class TasksInResponse(RWModel):
     tasks: List[Task]

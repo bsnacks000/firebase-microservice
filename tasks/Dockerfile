@@ -27,3 +27,4 @@ COPY . /code
 RUN poetry install --no-dev  # respects 
 
 EXPOSE 8001
+
