@@ -1,0 +1,63 @@
+version: '3.4'
+# x-default-environment:
+#   &default-environment
+#     - MONGO_USERNAME=${MONGO_USERNAME}
+#     - MONGO_PASSWORD=${MONGO_PASSWORD} 
+#     - MONGO_HOST=${MONGO_HOST}
+#     - MONGO_PORT=${MONGO_PORT}
+#     - MONGO_DB=${MONGO_DB}
+#     - MONGO_PROTOCOL=${MONGO_PROTOCOL}
+#     - ENVIRONMENT=${ENVIRONMENT}
+#     - FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}
+    
+services:
+    
+  mongo:
+    container_name: firebase_mongo 
+    image: mongo:4.4.8
+    hostname: mongo
+    restart: "no"
+    ports:
+      - "27017:27017"  # just for local dev 
+    volumes:
+      - mongodata:/data/db
+
+  users-api:
+    container_name: users_service
+    image: users:development
+    env_file:
+      - ./users/.env
+    restart: 'no'
+    build:
+        context: ./users
+        dockerfile: ./Dockerfile
+        target: development
+    volumes:
+        - .:/code
+    ports:
+      - "8000:8000"
+    command: uvicorn users.users.main:app --host=0.0.0.0 --port=8000 --reload
+    depends_on:
+      - mongo
+    
+  tasks-api:
+    container_name: tasks_service
+    image: tasks:development
+    env_file:
+      - ./tasks/.env
+    restart: 'no'
+    build:
+        context: ./tasks
+        dockerfile: ./Dockerfile
+        target: development
+    volumes:
+        - .:/code
+    ports:
+      - "8001:8001"
+    command: uvicorn tasks.tasks.main:app --host=0.0.0.0 --port=8001 --reload
+    depends_on:
+      - mongo
+   
+volumes:
+  mongodata:
+  
